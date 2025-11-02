@@ -76,7 +76,7 @@ class LogIn extends Component {
                     "&password=" + value.password)
                     .then(res => res.json())
                     .then(res => {
-                      if (res.data.length === 0) {
+                      if (!res) {
                         window.alert("Invalid Log In");
                       } else {
                         window.location = "DocHome";
@@ -88,7 +88,8 @@ class LogIn extends Component {
                     "&password=" + value.password)
                     .then(res => res.json())
                     .then(res => {
-                      if (res.data.length === 0) {
+                      console.log("res",res)
+                      if ( !res.data) {
                         window.alert("Invalid Log In");
                       } else {
                         window.location = "/Home";

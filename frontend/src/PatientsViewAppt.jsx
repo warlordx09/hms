@@ -44,13 +44,15 @@ export class PatientsViewAppointments extends Component {
         fetch("http://localhost:3001/userInSession")
             .then(res => res.json())
             .then(res => {
+                console.log(res)
                 var string_json = JSON.stringify(res);
                 var email_json = JSON.parse(string_json);
                 let email_in_use = email_json.email;
                 fetch('http://localhost:3001/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
-                        this.setState({ appointmentsState: res.data });
+                        console.log(res.data,email_in_use)
+                       this.setState({ appointmentsState: res.data})
                     });
             });
     }
@@ -74,30 +76,31 @@ export class PatientsViewAppointments extends Component {
                             {appointmentsState.map(patient =>
                                 <tr key={patient.user}>
                                     <td align="center" >
-                                        {new Date(patient.theDate).toLocaleDateString().substring(0, 10)}
+                                        {new Date(patient.date).toLocaleDateString().substring(0, 10)}
                                     </td>
-                                    <td align="center" >{patient.theStart.substring(0, 5)}</td>
-                                    <td align="center" >{patient.theEnd.substring(0, 5)}</td>
-                                    <td align="center">{patient.theConcerns} </td>
-                                    <td align="center">{patient.theSymptoms}</td>
+                               <td align="center">{patient.start_time ? patient.start_time.substring(0, 5) : "N/A"}</td>
+<td align="center">{patient.end_time ? patient.end_time.substring(0, 5) : "N/A"}</td>
+
+                                    <td align="center">{patient.concerns} </td>
+                                    <td align="center">{patient.symptoms}</td>
                                     <td align="center">{patient.status}</td>
                                     <td>
                                         <Button label="See Diagnosis"
-                                        href={`/showDiagnoses/${patient.ID}`}
-                                        ></Button>     
-                                    </td> 
+                                        href={`/showDiagnoses/${patient.id}`}
+                                        ></Button>
+                                    </td>
                                     <td>
                                     {   patient.status==="NotDone"?
                                         <Button label="Cancel"
                                         onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.id)
                                             window.location.reload()
                                         }}
                                         ></Button>
                                         :
                                         <Button label="Delete"
                                         onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.id)
                                             window.location.reload()
                                         }}
                                         ></Button>

@@ -36,14 +36,20 @@ export class ViewOneHistory extends Component {
         let email = "'" + value + "'";
         fetch('http://localhost:3001/OneHistory?patientEmail='+ email)
         .then(res => res.json())
-            .then(res => this.setState({ medhiststate: res.data }));
+            .then(res =>
+                {   console.log("one histyr",res)
+                    this.setState({ medhiststate: res.data})
+                });
     }
 
     allDiagnoses(value) {
         let email = "'" + value + "'";
         fetch('http://localhost:3001/allDiagnoses?patientEmail='+ email)
         .then(res => res.json())
-        .then(res => this.setState({ medhiststate2: res.data }));
+        .then(res =>{
+            console.log(res)
+             this.setState({ medhiststate2: res.data })
+        });
     }
 
     render() {
@@ -142,7 +148,8 @@ export class ViewOneHistory extends Component {
                                     <TableCell scope="row">
                                         <strong>Date</strong>
                                     </TableCell>
-                                    <TableCell>{patient.date.split('T')[0]}</TableCell>
+                                   <TableCell>{patient.date ? patient.date.split('T')[0] : '—'}</TableCell>
+
                                     <TableCell></TableCell>
                                     <TableCell><strong>Doctor</strong></TableCell>
                                     <TableCell>{patient.doctor}</TableCell>

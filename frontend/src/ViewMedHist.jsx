@@ -23,7 +23,7 @@ const theme = {
     },
   };
 export class ViewMedHist extends Component {
-    
+
     state = { medhiststate: [] }
 
     componentDidMount() {
@@ -38,7 +38,10 @@ export class ViewMedHist extends Component {
         console.log(patName);
         fetch('http://localhost:3001/MedHistView?name='+ patName + '&variable=words')
         .then(res => res.json())
-        .then(res => this.setState({ medhiststate: res.data }));
+        .then(res => {
+            console.log(res.data)
+            this.setState({ medhiststate: res.data })
+        });
     }
 
     render() {
@@ -69,13 +72,13 @@ export class ViewMedHist extends Component {
                                 <th style={{width:"50vw"}}>Name</th>
                                 <th style={{width:"50vw"}}>Profile</th>
                             </tr>
-                        </thead> 
+                        </thead>
                         <tbody>
                             {medhiststate.map(patient =>
                                 <tr key={patient.id} style={{textAlign:"center"}}>
                                     <td>{patient.Name} </td>
                                     <td>
-                                        <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
+                                        <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.Email}/>
                                     </td>
                                 </tr>
                             )}

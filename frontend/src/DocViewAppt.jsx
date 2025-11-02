@@ -30,7 +30,10 @@ export class DocViewAppt extends Component {
     getNames() {
         fetch('http://localhost:3001/doctorViewAppt')
         .then(res => res.json())
-        .then(res => this.setState({ apptlist: res.data }));
+        .then(res => {
+            console.log(res)
+this.setState({ apptlist: res.data })
+        });
     }
 
     render() {
@@ -78,8 +81,8 @@ export class DocViewAppt extends Component {
                                     <td>
                                         <Button label="Diagnose"
                                         href={`/Diagnose/${appt.id}`}
-                                        ></Button>     
-                                    </td> 
+                                        ></Button>
+                                    </td>
                                     <td>
                                         {appt.status === "NotDone"?
                                             <Button label="Cancel"
@@ -89,7 +92,7 @@ export class DocViewAppt extends Component {
                                             }}
                                             ></Button>
                                         :<div></div>}
-                                    </td> 
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
